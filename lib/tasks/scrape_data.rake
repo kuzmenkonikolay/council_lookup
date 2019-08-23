@@ -1,13 +1,17 @@
-require "water_supplier_search/base/database"
 require 'csv'
 require 'net/http'
 require 'json'
+
+require 'council_lookup/base/database/database'
 
 desc 'Load data from resource'
 namespace :scrape_data do
   task :parse do
     @db = CouncilLookup::Base::Database::Connect.new
     @tasks = Queue.new
+    p '---------------'
+    p @db
+    p '---------------'
     parse_csv_postcodes
   end
 

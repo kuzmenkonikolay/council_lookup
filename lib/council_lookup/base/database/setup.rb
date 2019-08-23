@@ -33,7 +33,7 @@ module CouncilLookup
 
         def create_index index
           @db.execute <<-SQL
-            CREATE INDEX "councils_#{index}_index" ON councils("#{index}")
+            CREATE INDEX if not exists "councils_#{index}_index" ON councils("#{index}")
           SQL
         end
       end

@@ -1,3 +1,5 @@
+require 'council_lookup/base/database/setup'
+
 module CouncilLookup
   module Base
     module Database
