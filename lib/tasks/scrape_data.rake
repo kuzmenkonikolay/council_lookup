@@ -9,9 +9,7 @@ namespace :scrape_data do
   task :parse do
     @db = CouncilLookup::Base::Database::Connect.new
     @tasks = Queue.new
-    p '---------------'
-    p @db
-    p '---------------'
+
     parse_csv_postcodes
   end
 
@@ -19,24 +17,22 @@ namespace :scrape_data do
     i = 0
 
     Thread.new do
-      CSV.foreach("lib/tasks/postcodes.csv", "r") do |row|
+      CSV.foreach("lib/tasks/councils.csv", "r") do |row|
         @tasks << row
       end
     end
 
-    50.times do
+    30.times do
       Thread.new do
         while (row = @tasks.pop)
           postcode = row[0]
-          if i != 0
-            if @db.search(postcode).nil?
-              name = request_for_supplier_name(postcode)
+          country_code = row[3]
+          country_name = row[4]
+          local_authority_code = row[5]
+          local_authority_name = row[6]
 
-              save_to_db(postcode, name)
 
-              sleep(0.02)
-            end
-          end
+          save_to_db(postcode, local_authority_name, country_code, country_name, local_authority_code) if i != 0
 
           i+=1
 
@@ -50,26 +46,9 @@ namespace :scrape_data do
     end.join
   end
 
-  def request_for_supplier_name(postcode)
-    uri = URI.parse("https://suppliers.water.org.uk/?postcode=#{postcode}&json=true&platform=wateruk")
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    response = http.get(uri.request_uri)
-
-    data = JSON.parse(response.body)
-
-    unless data['result'].nil?
-      result = data['result'].scan(/>(.*)<\/a>/)
-      unless result[0].nil?
-        @result = result[0][0]
-      end
-    end
-    @result
-  end
-
-  def save_to_db(postcode, name)
+  def save_to_db(postcode, name, country_code, country_name, local_authority_code)
     if @db.search(postcode).nil?
-      @db.insert(postcode, name) unless name.nil?
+      @db.insert(postcode, name, country_code, country_name, local_authority_code) unless name.nil?
     end
   end
 end

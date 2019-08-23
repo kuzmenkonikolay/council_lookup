@@ -6,21 +6,23 @@ module CouncilLookup
       class Connect < Setup
         def select_all
           @db.execute <<-SQL
-          select * from water_suppliers;
+            select * from councils;
           SQL
         end
 
-        def insert postcode, name
-          @db.execute('INSERT INTO water_suppliers(postcode, name) VALUES(?, ?)', [postcode, name])
+        def insert postcode, name, country_code, country_name, local_authority_code
+          @db.execute('INSERT INTO councils(postcode, local_authority_name, country_code, country_name, local_authority_code) VALUES(?, ?)', [
+              postcode, name, country_code, country_name, local_authority_code
+          ])
         end
 
         def search postcode
-          @db.execute('SELECT * FROM water_suppliers WHERE postcode=?', postcode)[0]
+          @db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase)[0]
         end
 
         def all_count
           @db.execute <<-SQL
-          select COUNT(*) from water_suppliers;
+            select COUNT(*) from councils;
           SQL
         end
       end
