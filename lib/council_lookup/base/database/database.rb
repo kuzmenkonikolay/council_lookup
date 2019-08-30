@@ -11,13 +11,21 @@ module CouncilLookup
         end
 
         def insert postcode, name, country_code, country_name, local_authority_code
-          @db.execute('INSERT INTO councils(postcode, local_authority_name, country_code, country_name, local_authority_code) VALUES(?, ?)', [
+          @db.execute('INSERT INTO councils(postcode, local_authority_name, country_code, country_name, local_authority_code) VALUES(?, ?, ?, ?, ?)', [
               postcode, name, country_code, country_name, local_authority_code
           ])
         end
 
         def search postcode
           @db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase)[0]
+        end
+
+        def where arr
+          @db.execute("SELECT * FROM councils WHERE postcode IN (#{arr})")
+        end
+
+        def pluck column, arr
+          @db.execute("SELECT #{column} FROM councils WHERE postcode IN (#{arr})").flatten
         end
 
         def all_count
