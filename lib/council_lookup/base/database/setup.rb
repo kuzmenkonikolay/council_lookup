@@ -1,9 +1,14 @@
 require 'sqlite3'
+require 'council_lookup/base/database/queries_helper'
+require 'council_lookup/base/database/security'
 
 module CouncilLookup
   module Base
     module Database
       class Setup
+        include CouncilLookup::Base::Database::QueriesHelper
+        include CouncilLookup::Base::Database::Security
+
         def initialize
           @db = SQLite3::Database.open 'councils'
 

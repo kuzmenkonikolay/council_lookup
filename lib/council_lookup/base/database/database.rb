@@ -16,7 +16,7 @@ module CouncilLookup
           ])
         end
 
-        def search postcode
+        def find postcode
           @db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase)[0]
         end
 
@@ -32,6 +32,10 @@ module CouncilLookup
           @db.execute <<-SQL
             select COUNT(*) from councils;
           SQL
+        end
+
+        def find_by *args
+          @db.execute("SELECT * FROM councils WHERE #{formation_where(args[0])}")[0]
         end
       end
     end
