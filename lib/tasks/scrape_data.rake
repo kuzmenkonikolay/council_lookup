@@ -82,14 +82,11 @@ namespace :scrape_data do
           i=0
         end
       end
-      if i==1745151
-        p 'end'
-      end
     end
   end
 
   def save_to_db(postcode, name, country_code, country_name, local_authority_code)
-    if @db.search(postcode).nil?
+    if @db.find(postcode).nil?
       print "/\r #{@global_index}"
       @global_index+=1
       @db.insert(postcode, name, country_code, country_name, local_authority_code)
