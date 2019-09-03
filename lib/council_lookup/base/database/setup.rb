@@ -14,8 +14,8 @@ module CouncilLookup
         def initialize
           @db = SQLite3::Database.open "#{DIRECTORY}/councils"
 
-          create_councils_table
-          create_indexes
+          # create_councils_table
+          # create_indexes
         end
 
         private
