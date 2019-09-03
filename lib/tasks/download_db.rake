@@ -15,7 +15,7 @@ namespace :download do
 
     Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
       http.request(req) do |response|
-        File.open('./councils', 'w') do |f|
+        File.open('councils', 'w') do |f|
           response.read_body do |chunk|
             f.write chunk
             progress += chunk.length
