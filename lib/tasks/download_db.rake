@@ -13,7 +13,7 @@ namespace :download do
     full_length = 220712960
     progress = 0
 
-    DIRECTORY = __dir__.gsub('/lib/tasks', '').freeze
+    DIRECTORY = __dir__.gsub('/tasks', '').freeze
 
     Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
       http.request(req) do |response|
