@@ -19,7 +19,7 @@ namespace :download do
       http.request(req) do |response|
         File.open("#{DIRECTORY}/councils", 'w') do |f|
           response.read_body do |chunk|
-            f.write chunk.encoding
+            f.write chunk.force_encoding('UTF-8')
             progress += chunk.length
             print "/\r COUNCIL LOOKUP: Downloading Councils DB: #{(progress*100)/full_length}%"
           end

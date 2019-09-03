@@ -9,8 +9,10 @@ module CouncilLookup
         include CouncilLookup::Base::Database::QueriesHelper
         include CouncilLookup::Base::Database::Security
 
+        DIRECTORY = __dir__.gsub('/council_lookup/base/database', '').freeze
+
         def initialize
-          @db = SQLite3::Database.open 'councils'
+          @db = SQLite3::Database.open "#{DIRECTORY}/councils"
 
           create_councils_table
           create_indexes
