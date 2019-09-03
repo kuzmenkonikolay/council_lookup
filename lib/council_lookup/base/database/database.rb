@@ -22,7 +22,7 @@ module CouncilLookup
         end
 
         def find postcode
-          @db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase)[0]
+          council(@db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase)[0])
         end
 
         def where arr

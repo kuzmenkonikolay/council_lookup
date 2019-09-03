@@ -9,8 +9,12 @@ namespace :scrape_data do
     @db = CouncilLookup::Base::Database::Connect.new
     @tasks = Queue.new
 
-    parse_csv_postcodes
-    correcting_data
+    p '--------'
+    p @db.find('G51 4NE')
+    p '--------'
+
+    # parse_csv_postcodes
+    # correcting_data
   end
 
   def parse_csv_postcodes

@@ -1,3 +1,5 @@
+require 'council_lookup/models/council'
+
 module CouncilLookup
   module Base
     module Database
@@ -19,6 +21,10 @@ module CouncilLookup
             i+=1
           end
           query
+        end
+
+        def council data
+          CouncilLookup::Models::Council.new(data)
         end
       end
     end
