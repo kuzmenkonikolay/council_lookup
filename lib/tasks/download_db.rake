@@ -13,11 +13,13 @@ namespace :download do
     full_length = 220712960
     progress = 0
 
+    DIRECTORY = __dir__.gsub('/lib/tasks', '').freeze
+
     Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
       http.request(req) do |response|
-        File.open('councils', 'w') do |f|
+        File.open("#{DIRECTORY}/councils", 'w') do |f|
           response.read_body do |chunk|
-            f.write chunk
+            f.write chunk.encoding
             progress += chunk.length
             print "/\r COUNCIL LOOKUP: Downloading Councils DB: #{(progress*100)/full_length}%"
           end
