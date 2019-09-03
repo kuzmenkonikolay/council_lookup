@@ -4,6 +4,7 @@ module CouncilLookup
   module Base
     module Database
       class Connect < Setup
+
         def select_all
           @db.execute <<-SQL
             select * from councils;
