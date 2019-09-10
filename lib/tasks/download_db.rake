@@ -15,6 +15,11 @@ namespace :download do
 
     DIRECTORY = __dir__.gsub('/tasks', '').freeze
 
+    if File.exist?("#{DIRECTORY}/councils")
+      File.delete("#{DIRECTORY}/councils")
+      p 'COUNCIL LOOKUP: OLD DB Deleted.'
+    end
+
     Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
       http.request(req) do |response|
         File.open("#{DIRECTORY}/councils", 'w') do |f|

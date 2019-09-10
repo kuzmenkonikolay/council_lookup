@@ -26,9 +26,11 @@ module CouncilLookup
           if result.any?
             result = result[0]
           else
-            result = council(@db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase.gsub(' ', ''))[0])
+            result = council(@db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase.gsub(' ', '')))
 
-            if !result.any?
+            if result.any?
+              result = result[0]
+            else
               result = council(@db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase.gsub(/(.{3})/, '\1 '))[0])
             end
           end
