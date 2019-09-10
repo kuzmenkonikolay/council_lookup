@@ -24,12 +24,12 @@ module CouncilLookup
         def find postcode
           result = @db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase)
           if result.any?
-            result = result[0]
+            result = council(result[0])
           else
-            result = council(@db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase.gsub(' ', '')))
+            result = @db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase.gsub(' ', ''))
 
             if result.any?
-              result = result[0]
+              result = council(result[0])
             else
               result = council(@db.execute('SELECT * FROM councils WHERE lower(postcode)=?', postcode.downcase.gsub(/(.{3})/, '\1 '))[0])
             end
