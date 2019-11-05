@@ -22,8 +22,9 @@ Download council db:
 
 ## Usage
 
-```@db = CouncilLookup.connect
-   council = @db.find(postcode)
+```
+@db = CouncilLookup.connect
+council = @db.find(postcode)
 ```
 
 There is such methods like: 
