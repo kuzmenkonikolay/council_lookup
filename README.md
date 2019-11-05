@@ -9,20 +9,33 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'council_lookup'
+gem 'council_lookup', git: 'https://github.com/kuzmenkonikolay/council_lookup'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
-Or install it yourself as:
+Download council db:
 
-    $ gem install council_lookup
+    $ rake download:db
 
 ## Usage
 
-TODO: Write usage instructions here
+```@db = CouncilLookup.connect
+   council = @db.find(postcode)
+```
+
+There is such methods like: 
+```
+insert(postcode, name, country_code, country_name, local_authority_code)
+where(array_of_postcodes)
+pluck(column, array_of_postcodes)
+all_count
+find_by(postcode: postcode)
+update(postcode, column, value)
+delete(postcode)
+```
 
 ## Development
 
